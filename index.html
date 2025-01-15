@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQRA Akademie - Anmeldung zum Quran-Unterricht</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --accent-color: #27AE60;
+            --background-color: #ECF0F1;
+            --text-color: #2C3E50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: var(--primary-color);
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #DDD;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .terms-container {
+            height: 200px;
+            overflow-y: scroll;
+            border: 2px solid #DDD;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background-color: #F8F9FA;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #219a52;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #D4EDDA;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #F8D7DA;
+            color: #721C24;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px 0;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>IQRA Akademie</h1>
+        <p>Anmeldung zum Quran-Unterricht</p>
+    </div>
+
+    <div class="container">
+        <div id="successMessage" class="success-message">
+            Ihre Anmeldung wurde erfolgreich übermittelt! Sie erhalten in Kürze eine Bestätigungs-E-Mail.
+        </div>
+        
+        <div id="errorMessage" class="error-message">
+            Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.
+        </div>
+
+        <div class="form-container">
+            <form id="registrationForm" onsubmit="return validateForm(event)">
+                <div class="form-group">
+                    <label for="vorname">Vorname*</label>
+                    <input type="text" id="vorname" name="vorname" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nachname">Nachname*</label>
+                    <input type="text" id="nachname" name="nachname" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="strasse">Straße und Hausnummer*</label>
+                    <input type="text" id="strasse" name="strasse" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="plz">PLZ*</label>
+                    <input type="text" id="plz" name="plz" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ort">Ort*</label>
+                    <input type="text" id="ort" name="ort" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="land">Land*</label>
+                    <select id="land" name="land" required>
+                        <option value="">Bitte wählen</option>
+                        <option value="DE">Deutschland</option>
+                        <option value="AT">Österreich</option>
+                        <option value="CH">Schweiz</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefonnummer*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-Mail*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Allgemeine Geschäftsbedingungen*</label>
+                    <div class="terms-container">
+                        <!-- Hier AGBs aus dem PDF einfügen -->
+                        <h3>Allgemeine Geschäftsbedingungen (AGB)</h3>
+                        <p>1. Registrierung</p>
+                        <p>1.1 Zur Registrierung benötigen wir Ihren vollständigen Namen, Ihre Adresse sowie Ihre
+                        Handynummer und E-Mail-Adresse. Rechnungen werden ausschließlich per E-Mail versendet. Wir
+                        versenden keine Rechnungen per Briefpost.</p>
+                        <!-- Weitere AGBs hier einfügen -->
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agb" name="agb" required>
+                        <label for="agb">Ich habe die AGBs gelesen und akzeptiere sie</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Häufig gestellte Fragen (FAQ)*</label>
+                    <div class="terms-container">
+                        <!-- Hier FAQ einfügen -->
+                        <h3>Häufig gestellte Fragen (FAQ)</h3>
+                        <p>1. Wie läuft der Unterricht ab?</p>
+                        <p>2. Was sind die Zahlungsbedingungen?</p>
+                        <p>3. Wie kann ich eine Unterrichtsstunde verschieben?</p>
+                        <!-- Weitere FAQs hier einfügen -->
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="faq" name="faq" required>
+                        <label for="faq">Ich habe die FAQ gelesen und verstanden</label>
+                    </div>
+                </div>
+                
+                <button type="submit">Anmeldung absenden</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        // Telefonnummer-Input initialisieren
+        var phoneInput = window.intlTelInput(document.querySelector("#phone"), {
+            preferredCountries: ["de", "at", "ch"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        function validateForm(event) {
+            event.preventDefault();
+            
+            // Formularvalidierung
+            if (!phoneInput.isValidNumber()) {
+                showError("Bitte geben Sie eine gültige Telefonnummer ein.");
+                return false;
+            }
+
+            // Formulardaten sammeln
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            data.phone = phoneInput.getNumber();
+
+            // API-Aufruf
+            submitForm(data);
+        }
+
+        function showSuccess() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            document.getElementById('registrationForm').reset();
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        async function submitForm(data) {
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showSuccess();
+                } else {
+                    showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+            }
+        }
+    </script>
+</body>
+</html>
