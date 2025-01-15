@@ -37,13 +37,18 @@
         }
 
         .header {
-            text-align: center;
-            padding: 60px 0;
-            background: linear-gradient(135deg, var(--primary-color), #0077b6);
-            color: white;
-            margin-bottom: 40px;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-            box-shadow: var(--box-shadow);
+        
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Damit der Header immer über anderen Elementen bleibt */
+    text-align: center;
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--primary-color), #0077b6);
+    color: white;
+    margin-bottom: 40px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    box-shadow: var(--box-shadow);
+
         }
 
         .header h1 {
@@ -276,9 +281,7 @@
                 <div class="form-group">
                     <label>Allgemeine Geschäftsbedingungen*</label>
                     <div class="terms-container">
-                        <h2>Allgemeine Geschäftsbedingungen (AGB)</h2>
-                        <p><strong>Stand:</strong> 20.09.2024</p>
-                            
+                        <p><strong>Stand:</strong> 20.09.2024</p>    
     <h3>1. Registrierung</h3>
     <p><strong>1.1</strong> Zur Registrierung benötigen wir Ihren vollständigen Namen, Ihre Adresse sowie Ihre Handynummer und E-Mail-Adresse. Rechnungen werden ausschließlich per E-Mail versendet. Wir versenden keine Rechnungen per Briefpost.</p>
     <p><strong>1.2</strong> Nach Ihrer Anmeldung erhalten Sie unmittelbar die Zugangsdaten zum Unterrichtsraum, sodass Sie ab dem von Ihnen gewünschten Termin direkt mit dem Unterricht beginnen können.</p>
