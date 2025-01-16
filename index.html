@@ -349,26 +349,23 @@
             }, 5000);
         }
 
-        async function submitForm(data) {
-            try {
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
+       async function submitForm(data) {
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzIK1wJeUoxcNPng5AO1BLgJ7KNCF7tsuET-9rTIIU55M9e7Yk5KygzJFb1xl7UuWtR/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            mode: 'no-cors' // Wichtig für Cross-Origin Requests
+        });
 
-                if (response.ok) {
-                    showSuccess();
-                } else {
-                    showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
-            }
-        }
+        showSuccess();
+    } catch (error) {
+        console.error('Error:', error);
+        showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+    }
+}
     </script>
 </body>
 </html>
