@@ -7,22 +7,24 @@ let phoneInput;
 document.addEventListener('DOMContentLoaded', () => {
     // Telefon-Input initialisieren
     const phoneInputElement = document.querySelector("#phone");
-    phoneInput = window.intlTelInput(phoneInputElement, {
-        initialCountry: "de",
-        preferredCountries: ["de", "at", "ch"],
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        separateDialCode: true,     // Auf true gesetzt für bessere Darstellung
-        formatOnDisplay: true,
-        nationalMode: false,        // Auf false gesetzt um internationale Formatierung zu erzwingen
-        autoHideDialCode: true,
-        autoPlaceholder: "aggressive",
-        dropdownContainer: document.body,
-        customContainer: "iti-container"
-    });
+    
+    // Container für Telefon-Input erstellen
+    const phoneContainer = document.createElement('div');
+    phoneContainer.className = 'phone-input-container';
+    phoneInputElement.parentNode.insertBefore(phoneContainer, phoneInputElement);
+    phoneContainer.appendChild(phoneInputElement);
 
-    // Zusätzliche CSS-Regeln für Telefon-Input
+    // Zusätzliche CSS-Regeln
     const style = document.createElement('style');
     style.textContent = `
+        .phone-input-container {
+            position: relative;
+            width: 100%;
+        }
+        .iti {
+            width: 100%;
+            display: block;
+        }
         .iti__flag-container {
             right: auto;
             left: 0;
@@ -30,48 +32,41 @@ document.addEventListener('DOMContentLoaded', () => {
         .iti--separate-dial-code .iti__selected-flag {
             background-color: transparent;
             padding-right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         .iti--separate-dial-code .iti__selected-dial-code {
-            display: none;
+            display: block;
+            color: #2C3E50;
+            margin-left: 4px;
+        }
+        .iti__arrow {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid #555;
+            margin-left: 4px;
+        }
+        .iti--separate-dial-code input {
+            padding-left: 90px !important;
+        }
+        .iti__country-list {
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e1e8ed;
         }
     `;
     document.head.appendChild(style);
 
-    // Zeige Validierungsfehler direkt beim Tippen als Hilfestellung
-    phoneInputElement.addEventListener('blur', function() {
-        const errorMsg = document.createElement('div');
-        errorMsg.className = 'phone-error';
-        errorMsg.style.color = 'red';
-        errorMsg.style.fontSize = '14px';
-        errorMsg.style.marginTop = '5px';
-
-        // Entferne vorherige Fehlermeldungen
-        const existingError = phoneInputElement.parentNode.querySelector('.phone-error');
-        if (existingError) {
-            existingError.remove();
-        }
-
-        if (!phoneInput.isValidNumber()) {
-            let errorCode = phoneInput.getValidationError();
-            let errorMessage = 'Hinweis zur Formatierung: ';
-            
-            switch(errorCode) {
-                case intlTelInputUtils.validationError.TOO_SHORT:
-                    errorMessage += 'Nummer scheint zu kurz zu sein.';
-                    break;
-                case intlTelInputUtils.validationError.TOO_LONG:
-                    errorMessage += 'Nummer scheint zu lang zu sein.';
-                    break;
-                case intlTelInputUtils.validationError.INVALID_COUNTRY_CODE:
-                    errorMessage += 'Ländervorwahl scheint ungültig zu sein.';
-                    break;
-                default:
-                    errorMessage += 'Standardformat wäre z.B. 123 45678900';
-            }
-            
-            errorMsg.textContent = errorMessage;
-            phoneInputElement.parentNode.appendChild(errorMsg);
-        }
+    phoneInput = window.intlTelInput(phoneInputElement, {
+        initialCountry: "de",
+        preferredCountries: ["de", "at", "ch"],
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        separateDialCode: true,
+        formatOnDisplay: true,
+        nationalMode: false,
+        autoHideDialCode: false,
+        autoPlaceholder: "aggressive"
     });
 
     // PLZ-Validierung
@@ -113,11 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const plzInput = document.getElementById('plz');
             if (plzInput.value.length !== 5 || !/^\d+$/.test(plzInput.value)) {
                 throw new Error("Bitte geben Sie eine gültige PLZ ein (5 Ziffern)");
-            }
-
-            // Validiere Telefonnummer
-            if (!phoneInput.isValidNumber()) {
-                throw new Error("Bitte geben Sie eine gültige Telefonnummer ein");
             }
 
             // Validiere Checkbox-Felder
