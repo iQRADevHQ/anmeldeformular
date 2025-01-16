@@ -263,13 +263,11 @@
     
     <div class="form-group">
         <label for="land">Land*</label>
-        <select id="land" name="land" required>
-                <div class="form-group">
-                    <label for="land">Land*</label>
-                    <select name="country">
-	<option value="DE" selected>Deutschland</option>
-	<option value="AT">Österreich</option>
-	<option value="CH">Schweiz</option>
+        	<select id="land" name="land" required>
+               	<select name="country">
+		<option value="DE" selected>Deutschland</option>
+		<option value="AT">Österreich</option>
+		<option value="CH">Schweiz</option>
 	<optgroup label="A">
 		<option value="AF">Afghanistan</option>
 		<option value="EG">Ägypten</option>
@@ -573,7 +571,7 @@
 </select>
                 </div>
                 
-                <div class="form-group">
+          <div class="form-group">
         <label for="phone">Telefonnummer*</label>
         <input type="tel" id="phone" name="phone" required>
     </div>
@@ -689,7 +687,9 @@
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
 
-    function validateForm(event) {
+    const form = document.getElementById('registrationForm');
+    
+    form.addEventListener('submit', async function(event) {
         event.preventDefault();
         
         if (!phoneInput.isValidNumber()) {
@@ -697,36 +697,10 @@
             return false;
         }
 
-        const formData = new FormData(event.target);
-        formData.append('phone', phoneInput.getNumber());
-
-        submitForm(formData);
-    }
-
-    function showSuccess() {
-        const successMessage = document.getElementById('successMessage');
-        successMessage.style.display = 'block';
-        document.getElementById('registrationForm').reset();
-        setTimeout(() => {
-            successMessage.style.display = 'none';
-        }, 5000);
-    }
-
-    function showError(message) {
-        const errorMessage = document.getElementById('errorMessage');
-        errorMessage.textContent = message;
-        errorMessage.style.display = 'block';
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        setTimeout(() => {
-            errorMessage.style.display = 'none';
-        }, 5000);
-    }
-
-    async function submitForm(formData) {
         try {
+            const formData = new FormData(form);
+            formData.set('phone', phoneInput.getNumber());
+            
             const response = await fetch('https://formspree.io/f/xpwwnvqg', {
                 method: 'POST',
                 body: formData,
@@ -737,12 +711,40 @@
 
             if (response.ok) {
                 showSuccess();
+                form.reset();
             } else {
                 showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
             }
         } catch (error) {
             console.error('Error:', error);
             showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+        }
+    });
+
+    function showSuccess() {
+        const successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            successMessage.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        } else {
+            alert('Ihre Anmeldung wurde erfolgreich übermittelt! Sie erhalten in Kürze eine Bestätigungs-E-Mail.');
+        }
+    }
+
+    function showError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        if (errorMessage) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            errorMessage.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        } else {
+            alert(message);
         }
     }
 </script>
