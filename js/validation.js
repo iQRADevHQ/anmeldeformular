@@ -1,22 +1,7 @@
-export function validateForm(event, phoneInput) {
-    event.preventDefault();
-    
-    if (!phoneInput.isValidNumber()) {
-        showError("Bitte geben Sie eine gültige Telefonnummer ein.");
-        return false;
-    }
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    data.phone = phoneInput.getNumber();
-
-    return data;
-}
-
+// validation.js
 export function showSuccess() {
     const successMessage = document.getElementById('successMessage');
     successMessage.style.display = 'block';
-    document.getElementById('registrationForm').reset();
     setTimeout(() => {
         successMessage.style.display = 'none';
     }, 5000);
