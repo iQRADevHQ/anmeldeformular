@@ -18,28 +18,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const style = document.createElement('style');
     style.textContent = `
         .phone-input-container {
-            position: relative;
-            width: 100%;
-        }
-        .iti {
-            width: 100%;
-            display: block;
-        }
-        .iti__flag-container {
-            right: auto;
-            left: 0;
-        }
-       .iti__selected-flag {
-    background-color: transparent;
+    position: relative;
+    width: 100%;
+}
+
+.iti {
+    display: flex; /* Flagge und Input nebeneinander */
+    align-items: center; /* Vertikale Zentrierung */
+    width: 100%;
+}
+
+.iti__flag-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Abstand zwischen Flagge und Eingabefeld */
+}
+
+.iti--separate-dial-code input {
+    padding-left: 70px !important; /* Platz für Flagge und Ländercode */
+}
+
+.iti__selected-flag {
     display: flex;
     align-items: center;
     gap: 4px;
     padding-right: 8px;
-}
-
-.iti__selected-dial-code {
-    color: #2C3E50;
-    margin-left: 4px;
 }
 
 .iti__arrow {
@@ -47,20 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
     border-right: 4px solid transparent;
     border-top: 5px solid #555;
     margin-left: 4px;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.iti--separate-dial-code .iti__flag-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.iti--separate-dial-code input {
-    padding-left: 90px !important;
 }
 
 .iti__country-list {
@@ -69,14 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     border: 1px solid #e1e8ed;
 }
 
-.iti__country-list .iti__country {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.iti__country-list .iti__dial-code {
-    margin-left: auto;
-}
 
     `;
     document.head.appendChild(style);
