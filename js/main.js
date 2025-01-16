@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     errorMessage += 'Ländervorwahl scheint ungültig zu sein.';
                     break;
                 default:
-                    errorMessage += 'Standardformat wäre z.B. +49 123 45678900';
+                    errorMessage += 'Standardformat wäre z.B. 123 45678900';
             }
             
             errorMsg.textContent = errorMessage;
