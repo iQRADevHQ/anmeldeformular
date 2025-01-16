@@ -1,0 +1,100 @@
+/* form.css */
+.form-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e1e8ed;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: var(--transition);
+    background-color: #fff;
+}
+
+input:hover,
+select:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 158, 227, 0.1);
+    background-color: #fff;
+}
+
+.terms-container {
+    height: 200px;
+    overflow-y: scroll;
+    border: 2px solid #e1e8ed;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    background-color: #f8fafc;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.checkbox-group:hover {
+    background-color: var(--primary-light);
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button {
+    background: linear-gradient(135deg, var(--primary-color), #0077b6);
+    color: white;
+    padding: 16px 32px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 158, 227, 0.2);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 158, 227, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
