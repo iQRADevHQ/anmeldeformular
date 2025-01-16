@@ -371,10 +371,15 @@
             }, 5000);
         }
 
-        function showError(message) {
+      function showError(message) {
             const errorMessage = document.getElementById('errorMessage');
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
+            // Smooth scroll to top of page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
             setTimeout(() => {
                 errorMessage.style.display = 'none';
             }, 5000);
