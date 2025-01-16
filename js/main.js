@@ -1,3 +1,4 @@
+// main.js
 import { showSuccess, showError } from './validation.js';
 import { submitForm } from './api.js';
 
@@ -10,12 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
         initialCountry: "de",
         preferredCountries: ["de", "at", "ch"],
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        separateDialCode: false,  // Auf false gesetzt, um doppelte Pfeile zu vermeiden
+        separateDialCode: true,     // Auf true gesetzt für bessere Darstellung
         formatOnDisplay: true,
-        nationalMode: true,       // Auf true gesetzt für bessere Formatierung
-        autoHideDialCode: true,   // Auf true gesetzt
-        autoPlaceholder: "aggressive"
+        nationalMode: false,        // Auf false gesetzt um internationale Formatierung zu erzwingen
+        autoHideDialCode: true,
+        autoPlaceholder: "aggressive",
+        dropdownContainer: document.body,
+        customContainer: "iti-container"
     });
+
+    // Zusätzliche CSS-Regeln für Telefon-Input
+    const style = document.createElement('style');
+    style.textContent = `
+        .iti__flag-container {
+            right: auto;
+            left: 0;
+        }
+        .iti--separate-dial-code .iti__selected-flag {
+            background-color: transparent;
+            padding-right: 8px;
+        }
+        .iti--separate-dial-code .iti__selected-dial-code {
+            display: none;
+        }
+    `;
+    document.head.appendChild(style);
 
     // Zeige Validierungsfehler direkt beim Tippen als Hilfestellung
     phoneInputElement.addEventListener('blur', function() {
@@ -54,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Rest des Codes bleibt unverändert...
+    // PLZ-Validierung
     const plzInput = document.getElementById('plz');
     if (plzInput) {
         plzInput.addEventListener('input', function(e) {
@@ -93,6 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const plzInput = document.getElementById('plz');
             if (plzInput.value.length !== 5 || !/^\d+$/.test(plzInput.value)) {
                 throw new Error("Bitte geben Sie eine gültige PLZ ein (5 Ziffern)");
+            }
+
+            // Validiere Telefonnummer
+            if (!phoneInput.isValidNumber()) {
+                throw new Error("Bitte geben Sie eine gültige Telefonnummer ein");
             }
 
             // Validiere Checkbox-Felder
