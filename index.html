@@ -572,14 +572,14 @@
                 </div>
                 
           <div class="form-group">
-        <label for="phone">Telefonnummer*</label>
-        <input type="tel" id="phone" name="phone" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="email">E-Mail*</label>
-        <input type="email" id="email" name="email" required>
-    </div>
+                    <label for="phone">Telefonnummer*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-Mail*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
                 
                 <div class="form-group">
                     <label>Allgemeine Geschäftsbedingungen*</label>
@@ -680,12 +680,13 @@
         </div>
     </div>
 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
-    // Telefonnummer-Input initialisieren
-    var phoneInput = window.intlTelInput(document.querySelector("#phone"), {
-        preferredCountries: ["de", "at", "ch"],
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
+        // Telefonnummer-Input initialisieren
+        var phoneInput = window.intlTelInput(document.querySelector("#phone"), {
+            preferredCountries: ["de", "at", "ch"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
 
     const form = document.getElementById('registrationForm');
     
