@@ -8,15 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Telefon-Input initialisieren
     const phoneInputElement = document.querySelector("#phone");
     phoneInput = window.intlTelInput(phoneInputElement, {
+        initialCountry: "de",
         preferredCountries: ["de", "at", "ch"],
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         separateDialCode: true,
         formatOnDisplay: true,
-        nationalMode: false
+        nationalMode: false,
+        autoHideDialCode: false,
+        autoPlaceholder: "aggressive"
     });
 
     // Zeige Validierungsfehler direkt beim Tippen
-    phoneInputElement.addEventListener('input', () => {
+    phoneInputElement.addEventListener('blur', function() {
         const errorMsg = document.createElement('div');
         errorMsg.className = 'phone-error';
         errorMsg.style.color = 'red';
@@ -30,9 +33,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!phoneInput.isValidNumber()) {
-            errorMsg.textContent = 'Bitte geben Sie eine gültige Telefonnummer ein';
+            let errorCode = phoneInput.getValidationError();
+            let errorMessage = 'Ungültige Telefonnummer. ';
+            
+            switch(errorCode) {
+                case intlTelInputUtils.validationError.TOO_SHORT:
+                    errorMessage += 'Nummer ist zu kurz.';
+                    break;
+                case intlTelInputUtils.validationError.TOO_LONG:
+                    errorMessage += 'Nummer ist zu lang.';
+                    break;
+                case intlTelInputUtils.validationError.INVALID_COUNTRY_CODE:
+                    errorMessage += 'Ungültige Ländervorwahl.';
+                    break;
+                default:
+                    errorMessage += 'Bitte geben Sie eine gültige Nummer ein (z.B. +49 123 45678900)';
+            }
+            
+            errorMsg.textContent = errorMessage;
             phoneInputElement.parentNode.appendChild(errorMsg);
         }
+    });
+
+    // Validierung für PLZ
+    const plzInput = document.getElementById('plz');
+    if (plzInput) {
+        plzInput.addEventListener('input', function(e) {
+            // Entferne alle Nicht-Zahlen
+            this.value = this.value.replace(/[^\d]/g, '');
+            
+            // Begrenze auf 5 Ziffern für deutsche PLZ
+            if (this.value.length > 5) {
+                this.value = this.value.slice(0, 5);
+            }
+        });
+    }
+
+    // Validierung für Namen (nur Buchstaben und Bindestriche)
+    const nameInputs = document.querySelectorAll('#vorname, #nachname');
+    nameInputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^a-zA-ZäöüßÄÖÜ\- ]/g, '');
+        });
     });
 
     // Formular-Event-Listener
@@ -45,9 +87,29 @@ document.addEventListener('DOMContentLoaded', () => {
         submitButton.textContent = 'Wird gesendet...';
         
         try {
-            // Validiere Telefonnummer
             if (!phoneInput.isValidNumber()) {
-                throw new Error("Bitte geben Sie eine gültige Telefonnummer ein. Beispiel: +49 123 45678900");
+                throw new Error("Bitte geben Sie eine gültige Telefonnummer ein (z.B. +49 123 45678900)");
+            }
+
+            // Validiere E-Mail-Format
+            const emailInput = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                throw new Error("Bitte geben Sie eine gültige E-Mail-Adresse ein");
+            }
+
+            // Validiere PLZ (5 Ziffern für Deutschland)
+            const plzInput = document.getElementById('plz');
+            if (plzInput.value.length !== 5 || !/^\d+$/.test(plzInput.value)) {
+                throw new Error("Bitte geben Sie eine gültige PLZ ein (5 Ziffern)");
+            }
+
+            // Validiere Checkbox-Felder
+            if (!document.getElementById('agb').checked) {
+                throw new Error("Bitte akzeptieren Sie die AGBs");
+            }
+            if (!document.getElementById('faq').checked) {
+                throw new Error("Bitte bestätigen Sie, dass Sie die FAQ gelesen haben");
             }
 
             const formData = new FormData(event.target);
@@ -55,16 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Formatierte Telefonnummer mit Ländervorwahl
             data.phone = phoneInput.getNumber(intlTelInputUtils.numberFormat.INTERNATIONAL);
-
-            // Füge zusätzliche Informationen hinzu
-            data.country = phoneInput.getSelectedCountryData().iso2.toUpperCase();
-            data.countryCode = phoneInput.getSelectedCountryData().dialCode;
             
             console.log('Formulardaten werden gesendet:', data); // Debug-Log
             
             await submitForm(data);
             showSuccess();
             event.target.reset();
+            
+            // Telefon-Input zurücksetzen
+            phoneInput.setCountry('de');
             
         } catch (error) {
             console.error('Fehler bei der Übermittlung:', error);
@@ -76,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialisiere das Telefon-Input-Feld mit einem Beispielformat
-    phoneInputElement.placeholder = 'z.B. +49 123 45678900';
+    // Setze initiale Beispiel-Platzhalter
+    if (phoneInput) {
+        phoneInputElement.placeholder = 'z.B. +49 123 45678900';
+    }
 });
