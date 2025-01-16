@@ -182,7 +182,19 @@
             color: #991b1b;
             border: 1px solid #fca5a5;
         }
+ .iti {
+            width: 100%;
+        }
 
+        .iti__flag {
+            background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png");
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .iti__flag {
+                background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags@2x.png");
+            }
+        }
         @keyframes slideIn {
             from {
                 transform: translateY(-20px);
