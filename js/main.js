@@ -1,4 +1,3 @@
-// main.js
 import { showSuccess, showError } from './validation.js';
 import { submitForm } from './api.js';
 
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         autoPlaceholder: "aggressive"
     });
 
-    // Zeige Validierungsfehler direkt beim Tippen
+    // Zeige Validierungsfehler direkt beim Tippen (nur als Hilfe für den Benutzer)
     phoneInputElement.addEventListener('blur', function() {
         const errorMsg = document.createElement('div');
         errorMsg.className = 'phone-error';
@@ -34,20 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!phoneInput.isValidNumber()) {
             let errorCode = phoneInput.getValidationError();
-            let errorMessage = 'Ungültige Telefonnummer. ';
+            let errorMessage = 'Hinweis: ';
             
             switch(errorCode) {
                 case intlTelInputUtils.validationError.TOO_SHORT:
-                    errorMessage += 'Nummer ist zu kurz.';
+                    errorMessage += 'Nummer scheint zu kurz zu sein.';
                     break;
                 case intlTelInputUtils.validationError.TOO_LONG:
-                    errorMessage += 'Nummer ist zu lang.';
+                    errorMessage += 'Nummer scheint zu lang zu sein.';
                     break;
                 case intlTelInputUtils.validationError.INVALID_COUNTRY_CODE:
-                    errorMessage += 'Ungültige Ländervorwahl.';
+                    errorMessage += 'Ländervorwahl scheint ungültig zu sein.';
                     break;
                 default:
-                    errorMessage += 'Bitte geben Sie eine gültige Nummer ein (z.B. +49 123 45678900)';
+                    errorMessage += 'Das Format entspricht nicht dem Standard (z.B. +49 123 45678900)';
             }
             
             errorMsg.textContent = errorMessage;
@@ -55,21 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Validierung für PLZ
+    // Rest der Validierungen bleiben unverändert...
     const plzInput = document.getElementById('plz');
     if (plzInput) {
         plzInput.addEventListener('input', function(e) {
-            // Entferne alle Nicht-Zahlen
             this.value = this.value.replace(/[^\d]/g, '');
-            
-            // Begrenze auf 5 Ziffern für deutsche PLZ
             if (this.value.length > 5) {
                 this.value = this.value.slice(0, 5);
             }
         });
     }
 
-    // Validierung für Namen (nur Buchstaben und Bindestriche)
     const nameInputs = document.querySelectorAll('#vorname, #nachname');
     nameInputs.forEach(input => {
         input.addEventListener('input', function(e) {
@@ -77,20 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Formular-Event-Listener
+    // Modifizierter Formular-Event-Listener
     document.getElementById('registrationForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         
-        // Deaktivieren Sie den Submit-Button während der Übermittlung
         const submitButton = event.target.querySelector('button[type="submit"]');
         submitButton.disabled = true;
         submitButton.textContent = 'Wird gesendet...';
         
         try {
-            if (!phoneInput.isValidNumber()) {
-                throw new Error("Bitte geben Sie eine gültige Telefonnummer ein (z.B. +49 123 45678900)");
-            }
-
             // Validiere E-Mail-Format
             const emailInput = document.getElementById('email');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -115,10 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Formatierte Telefonnummer mit Ländervorwahl
-            data.phone = phoneInput.getNumber(intlTelInputUtils.numberFormat.INTERNATIONAL);
+            // Telefonnummer immer im internationalen Format speichern, 
+            // auch wenn sie nicht valid ist
+            data.phone = phoneInput.getNumber();
             
-            console.log('Formulardaten werden gesendet:', data); // Debug-Log
+            console.log('Formulardaten werden gesendet:', data);
             
             await submitForm(data);
             showSuccess();
@@ -131,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Fehler bei der Übermittlung:', error);
             showError(error.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
         } finally {
-            // Button wieder aktivieren
             submitButton.disabled = false;
             submitButton.textContent = 'Anmeldung absenden';
         }
