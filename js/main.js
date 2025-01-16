@@ -9,46 +9,67 @@ document.addEventListener('DOMContentLoaded', () => {
         initialCountry: "de",
         preferredCountries: ["de", "at", "ch"],
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        separateDialCode: true,     // Zeigt Ländervorwahl separat an
+        separateDialCode: false,     // Ländervorwahl im Input-Feld integriert
         formatOnDisplay: true,
         nationalMode: false,         // Ermöglicht internationale Formatierung
         autoHideDialCode: false,     // Ländervorwahl immer sichtbar
-        autoPlaceholder: "polite",   // Zeigt Platzhalter im lokalen Format
-        customContainer: "w-full",   // Volle Breite für besseres Layout
+        allowDropdown: true,         // Erlaubt Länderauswahl
+        dropdownContainer: document.body,
+        // Styling für das Flag-Container
+        customContainer: "iti-flag-container",
+        // Angepasste Platzhalter
         customPlaceholder: function(selectedCountryData) {
             const placeholders = {
-                de: "151 12345678",
-                at: "664 1234567",
-                ch: "79 123 45 67",
-                gb: "7400 123456",
-                us: "201 555 0123",
-                fr: "6 12 34 56 78",
-                it: "312 345 6789",
-                es: "612 345 678"
+                de: "Phone",
+                at: "Phone",
+                ch: "Phone",
+                gb: "Phone",
+                us: "Phone"
             };
-            return placeholders[selectedCountryData.iso2] || "123 456 7890";
+            return placeholders[selectedCountryData.iso2] || "Phone";
         }
     });
 
-    // Formatierung während der Eingabe
-    phoneInputElement.addEventListener('input', function() {
-        if (this.value) {
-            let number = this.value.replace(/[^\d+]/g, '');
-            
-            const countryData = phoneInput.getSelectedCountryData();
-            if (countryData.iso2 === 'de') {
-                number = number.replace(/(\d{3})(\d{3,4})(\d{4})$/, '$1 $2 $3');
-            } else {
-                number = number.replace(/(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3');
-            }
-            
-            if (this.value !== number) {
-                this.value = number;
-            }
-        }
-    });
+    // Styling für das Telefon-Input
+    const phoneContainer = phoneInputElement.parentElement;
+    phoneContainer.style.cssText = `
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+    `;
 
-    // Verbesserte Validierung mit detaillierten Fehlermeldungen
+    // Styling für das Input-Feld
+    phoneInputElement.style.cssText = `
+        width: 100%;
+        padding: 10px 10px 10px 90px; /* Extra Platz links für die Flagge und Vorwahl */
+        border: 1px solid #e1e1e1;
+        border-radius: 25px;
+        font-size: 16px;
+        outline: none;
+    `;
+
+    // Zusätzliches CSS für die Flaggen-Dropdown
+    const style = document.createElement('style');
+    style.textContent = `
+        .iti__country-list {
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .iti__flag-container {
+            padding-left: 15px;
+        }
+        .iti__selected-flag {
+            padding: 0 10px;
+            background: transparent !important;
+        }
+        .iti__selected-flag:hover, .iti__selected-flag:focus {
+            background: transparent !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Rest Ihrer Validierungslogik...
     phoneInputElement.addEventListener('blur', function() {
         validatePhoneNumber(this);
     });
@@ -70,47 +91,34 @@ document.addEventListener('DOMContentLoaded', () => {
             
             switch(errorCode) {
                 case intlTelInputUtils.validationError.TOO_SHORT:
-                    const minLength = phoneInput.getCountryData()
-                        .find(c => c.iso2 === selectedCountry.iso2)?.minLength;
-                    errorMessage = `Für ${selectedCountry.name} werden mindestens ${minLength} Ziffern benötigt`;
+                    errorMessage = 'Nummer zu kurz';
                     break;
                 case intlTelInputUtils.validationError.TOO_LONG:
-                    const maxLength = phoneInput.getCountryData()
-                        .find(c => c.iso2 === selectedCountry.iso2)?.maxLength;
-                    errorMessage = `Für ${selectedCountry.name} sind maximal ${maxLength} Ziffern erlaubt`;
+                    errorMessage = 'Nummer zu lang';
                     break;
                 case intlTelInputUtils.validationError.INVALID_COUNTRY_CODE:
-                    errorMessage = 'Bitte wählen Sie eine gültige Ländervorwahl';
-                    break;
-                case intlTelInputUtils.validationError.NOT_A_NUMBER:
-                    errorMessage = 'Bitte geben Sie nur Zahlen ein';
+                    errorMessage = 'Ungültige Ländervorwahl';
                     break;
                 default:
-                    errorMessage = `Beispiel für ${selectedCountry.name}: ${phoneInput.customPlaceholder(selectedCountry)}`;
+                    errorMessage = 'Ungültige Nummer';
             }
             
-            errorMsg.innerHTML = `${errorMessage}<br><small style="color: #666;">Die internationale Vorwahl wird automatisch ergänzt</small>`;
+            errorMsg.textContent = errorMessage;
             element.parentNode.appendChild(errorMsg);
             return false;
         }
         return true;
     }
 
-    // Style-Anpassungen für das Telefon-Input
-    const phoneContainer = phoneInputElement.parentElement;
-    phoneContainer.style.cssText = `
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        width: 100%;
-    `;
-
-    // Setze initialen Platzhalter und Update bei Länderänderung
-    phoneInputElement.placeholder = phoneInput.customPlaceholder(phoneInput.getSelectedCountryData());
+    // Aktualisiere Platzhalter bei Länderänderung
     phoneInputElement.addEventListener('countrychange', function() {
-        phoneInputElement.placeholder = phoneInput.customPlaceholder(phoneInput.getSelectedCountryData());
+        this.placeholder = phoneInput.customPlaceholder(phoneInput.getSelectedCountryData());
         validatePhoneNumber(this);
     });
+
+    // Setze initialen Platzhalter
+    phoneInputElement.placeholder = phoneInput.customPlaceholder(phoneInput.getSelectedCountryData());
+});
 
     // PLZ Validierung
     const plzInput = document.getElementById('plz');
