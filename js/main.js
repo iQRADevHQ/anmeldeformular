@@ -29,32 +29,55 @@ document.addEventListener('DOMContentLoaded', () => {
             right: auto;
             left: 0;
         }
-        .iti--separate-dial-code .iti__selected-flag {
-            background-color: transparent;
-            padding-right: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .iti--separate-dial-code .iti__selected-dial-code {
-            display: block;
-            color: #2C3E50;
-            margin-left: 4px;
-        }
-        .iti__arrow {
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 5px solid #555;
-            margin-left: 4px;
-        }
-        .iti--separate-dial-code input {
-            padding-left: 90px !important;
-        }
-        .iti__country-list {
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e1e8ed;
-        }
+       .iti__selected-flag {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-right: 8px;
+}
+
+.iti__selected-dial-code {
+    color: #2C3E50;
+    margin-left: 4px;
+}
+
+.iti__arrow {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #555;
+    margin-left: 4px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.iti--separate-dial-code .iti__flag-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.iti--separate-dial-code input {
+    padding-left: 90px !important;
+}
+
+.iti__country-list {
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e1e8ed;
+}
+
+.iti__country-list .iti__country {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.iti__country-list .iti__dial-code {
+    margin-left: auto;
+}
+
     `;
     document.head.appendChild(style);
 
