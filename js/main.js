@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
         initialCountry: "de",
         preferredCountries: ["de", "at", "ch"],
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        separateDialCode: true,
+        separateDialCode: false,  // Auf false gesetzt, um doppelte Pfeile zu vermeiden
         formatOnDisplay: true,
-        nationalMode: false,
-        autoHideDialCode: false,
+        nationalMode: true,       // Auf true gesetzt für bessere Formatierung
+        autoHideDialCode: true,   // Auf true gesetzt
         autoPlaceholder: "aggressive"
     });
 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Validierung für PLZ
+    // Rest des Codes bleibt unverändert...
     const plzInput = document.getElementById('plz');
     if (plzInput) {
         plzInput.addEventListener('input', function(e) {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Telefonnummer ohne Validierung übernehmen
+            // Telefonnummer mit vollständiger internationaler Nummer übernehmen
             data.phone = phoneInput.getNumber();
             
             console.log('Formulardaten werden gesendet:', data);
@@ -129,6 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Setze initiale Beispiel-Platzhalter
     if (phoneInput) {
-        phoneInputElement.placeholder = 'z.B. +49 123 45678900';
+        phoneInputElement.placeholder = 'z.B. 123 45678900';
     }
 });
