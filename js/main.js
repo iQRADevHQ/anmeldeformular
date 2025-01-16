@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         autoPlaceholder: "aggressive"
     });
 
-    // Zeige Validierungsfehler direkt beim Tippen (nur als Hilfe für den Benutzer)
+    // Zeige Validierungsfehler direkt beim Tippen als Hilfestellung
     phoneInputElement.addEventListener('blur', function() {
         const errorMsg = document.createElement('div');
         errorMsg.className = 'phone-error';
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!phoneInput.isValidNumber()) {
             let errorCode = phoneInput.getValidationError();
-            let errorMessage = 'Hinweis: ';
+            let errorMessage = 'Hinweis zur Formatierung: ';
             
             switch(errorCode) {
                 case intlTelInputUtils.validationError.TOO_SHORT:
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     errorMessage += 'Ländervorwahl scheint ungültig zu sein.';
                     break;
                 default:
-                    errorMessage += 'Das Format entspricht nicht dem Standard (z.B. +49 123 45678900)';
+                    errorMessage += 'Standardformat wäre z.B. +49 123 45678900';
             }
             
             errorMsg.textContent = errorMessage;
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Rest der Validierungen bleiben unverändert...
+    // Validierung für PLZ
     const plzInput = document.getElementById('plz');
     if (plzInput) {
         plzInput.addEventListener('input', function(e) {
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Validierung für Namen (nur Buchstaben und Bindestriche)
     const nameInputs = document.querySelectorAll('#vorname, #nachname');
     nameInputs.forEach(input => {
         input.addEventListener('input', function(e) {
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Modifizierter Formular-Event-Listener
+    // Formular-Event-Listener
     document.getElementById('registrationForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         
@@ -105,8 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Telefonnummer immer im internationalen Format speichern, 
-            // auch wenn sie nicht valid ist
+            // Telefonnummer ohne Validierung übernehmen
             data.phone = phoneInput.getNumber();
             
             console.log('Formulardaten werden gesendet:', data);
