@@ -7,22 +7,33 @@ let phoneInput;
 document.addEventListener('DOMContentLoaded', () => {
     // Telefon-Input initialisieren
     const phoneInputElement = document.querySelector("#phone");
-    phoneInput = window.intlTelInput(phoneInputElement, {
-        initialCountry: "de",
-        preferredCountries: ["de", "at", "ch"],
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        separateDialCode: true,     // Auf true gesetzt für bessere Darstellung
-        formatOnDisplay: true,
-        nationalMode: false,        // Auf false gesetzt um internationale Formatierung zu erzwingen
-        autoHideDialCode: true,
-        autoPlaceholder: "aggressive",
-        dropdownContainer: document.body,
-        customContainer: "iti-container"
-    });
+    
+    // Container für Telefon-Input und Fehlermeldung erstellen
+    const phoneContainer = document.createElement('div');
+    phoneContainer.className = 'phone-input-container';
+    phoneInputElement.parentNode.insertBefore(phoneContainer, phoneInputElement);
+    phoneContainer.appendChild(phoneInputElement);
 
-    // Zusätzliche CSS-Regeln für Telefon-Input
+    // Erstelle Container für Fehlermeldung
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'phone-error-container';
+    phoneContainer.appendChild(errorContainer);
+
+    // Zusätzliche CSS-Regeln
     const style = document.createElement('style');
     style.textContent = `
+        .phone-input-container {
+            position: relative;
+            width: 100%;
+        }
+        .phone-error-container {
+            margin-top: 5px;
+            min-height: 20px; /* Reservierter Platz für Fehlermeldung */
+        }
+        .iti {
+            width: 100%;
+            display: block;
+        }
         .iti__flag-container {
             right: auto;
             left: 0;
@@ -34,22 +45,29 @@ document.addEventListener('DOMContentLoaded', () => {
         .iti--separate-dial-code .iti__selected-dial-code {
             display: none;
         }
+        .phone-error {
+            color: red;
+            font-size: 14px;
+        }
     `;
     document.head.appendChild(style);
 
+    phoneInput = window.intlTelInput(phoneInputElement, {
+        initialCountry: "de",
+        preferredCountries: ["de", "at", "ch"],
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        separateDialCode: true,
+        formatOnDisplay: true,
+        nationalMode: false,
+        autoHideDialCode: true,
+        autoPlaceholder: "aggressive",
+        customContainer: "iti-container"
+    });
+
     // Zeige Validierungsfehler direkt beim Tippen als Hilfestellung
     phoneInputElement.addEventListener('blur', function() {
-        const errorMsg = document.createElement('div');
-        errorMsg.className = 'phone-error';
-        errorMsg.style.color = 'red';
-        errorMsg.style.fontSize = '14px';
-        errorMsg.style.marginTop = '5px';
-
         // Entferne vorherige Fehlermeldungen
-        const existingError = phoneInputElement.parentNode.querySelector('.phone-error');
-        if (existingError) {
-            existingError.remove();
-        }
+        errorContainer.innerHTML = '';
 
         if (!phoneInput.isValidNumber()) {
             let errorCode = phoneInput.getValidationError();
@@ -69,12 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     errorMessage += 'Standardformat wäre z.B. 123 45678900';
             }
             
-            errorMsg.textContent = errorMessage;
-            phoneInputElement.parentNode.appendChild(errorMsg);
+            const errorElement = document.createElement('div');
+            errorElement.className = 'phone-error';
+            errorElement.textContent = errorMessage;
+            errorContainer.appendChild(errorElement);
         }
     });
 
-    // PLZ-Validierung
+    // Rest des Codes bleibt unverändert...
     const plzInput = document.getElementById('plz');
     if (plzInput) {
         plzInput.addEventListener('input', function(e) {
