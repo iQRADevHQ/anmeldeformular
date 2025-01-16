@@ -16,26 +16,31 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registrationForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         
-        if (!phoneInput.isValidNumber()) {
-            showError("Bitte geben Sie eine gültige Telefonnummer ein.");
-            return;
-        }
-
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData.entries());
-        data.phone = phoneInput.getNumber();
-
+        // Deaktivieren Sie den Submit-Button während der Übermittlung
+        const submitButton = event.target.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Wird gesendet...';
+        
         try {
-            const success = await submitForm(data);
-            if (success) {
-                showSuccess();
-                event.target.reset();
-            } else {
-                showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+            if (!phoneInput.isValidNumber()) {
+                throw new Error("Bitte geben Sie eine gültige Telefonnummer ein.");
             }
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            data.phone = phoneInput.getNumber();
+
+            await submitForm(data);
+            showSuccess();
+            event.target.reset();
+            
         } catch (error) {
-            console.error('Submission error:', error);
-            showError("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+            console.error('Fehler bei der Übermittlung:', error);
+            showError(error.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
+        } finally {
+            // Button wieder aktivieren
+            submitButton.disabled = false;
+            submitButton.textContent = 'Anmeldung absenden';
         }
     });
 });
