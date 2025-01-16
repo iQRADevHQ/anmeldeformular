@@ -8,7 +8,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="image/logo32x32.png">
     
-    <!-- Externe CSS Bibliotheken -->
+    <!-- Telefon-Input CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
     
     <!-- Eigene CSS Dateien -->
@@ -18,11 +18,8 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <h1>IQRA Akademie</h1>
-        <p>Anmeldung für Quran- und Arabisch-Unterricht</p>
-    </div>
+    <!-- Header Container -->
+    <div id="headerContainer"></div>
 
     <div class="container">
         <!-- Benachrichtigungen -->
@@ -66,7 +63,6 @@
                 
                 <div class="form-group">
                     <label for="land">Land*</label>
-                    <!-- Land-Select wird durch separate Komponente geladen -->
                     <div id="landContainer"></div>
                 </div>
                 
@@ -82,14 +78,10 @@
                 </div>
 
                 <!-- AGBs -->
-                <div class="form-group" id="agbContainer">
-                    <!-- AGB-Content wird durch separate Komponente geladen -->
-                </div>
+                <div id="agbContainer"></div>
 
                 <!-- FAQs -->
-                <div class="form-group" id="faqContainer">
-                    <!-- FAQ-Content wird durch separate Komponente geladen -->
-                </div>
+                <div id="faqContainer"></div>
                 
                 <button type="submit">Anmeldung absenden</button>
             </form>
@@ -98,35 +90,9 @@
 
     <!-- Externe JavaScript Bibliotheken -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
     
     <!-- Eigene JavaScript Dateien -->
-    <script src="js/validation.js" type="module"></script>
-    <script src="js/api.js" type="module"></script>
-    <script src="js/main.js" type="module"></script>
-
-    <!-- Komponenten laden -->
-    <script>
-        // Laden der Komponenten nach dem DOM-Load
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Laden der Länder-Select Komponente
-                const landResponse = await fetch('components/land-select.html');
-                const landHtml = await landResponse.text();
-                document.getElementById('landContainer').innerHTML = landHtml;
-
-                // Laden der AGB Komponente
-                const agbResponse = await fetch('components/agb.html');
-                const agbHtml = await agbResponse.text();
-                document.getElementById('agbContainer').innerHTML = agbHtml;
-
-                // Laden der FAQ Komponente
-                const faqResponse = await fetch('components/faq.html');
-                const faqHtml = await faqResponse.text();
-                document.getElementById('faqContainer').innerHTML = faqHtml;
-            } catch (error) {
-                console.error('Fehler beim Laden der Komponenten:', error);
-            }
-        });
-    </script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
