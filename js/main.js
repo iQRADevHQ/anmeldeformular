@@ -1,5 +1,5 @@
 // main.js
-import { validateForm, showSuccess, showError } from './validation.js';
+import { showSuccess, showError } from './validation.js';
 import { submitForm } from './api.js';
 
 let phoneInput;
