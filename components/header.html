@@ -1,0 +1,76 @@
+<!-- components/header.html -->
+<header class="header">
+    <h1>IQRA Akademie</h1>
+    <p>Anmeldung für Quran- und Arabisch-Unterricht</p>
+</header>
+
+<style>
+/* Header-spezifische Styles */
+.header {
+    position: relative;
+    text-align: center;
+    padding: 30px 0;
+    background: linear-gradient(135deg, var(--primary-color), #0077b6);
+    color: white;
+    margin-bottom: 40px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.header h1 {
+    margin-bottom: 15px;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.header p {
+    font-size: 1.3em;
+    opacity: 0.95;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Responsive Styles für den Header */
+@media (max-width: 768px) {
+    .header {
+        padding: 25px 0;
+    }
+
+    .header h1 {
+        font-size: 2.2em;
+    }
+
+    .header p {
+        font-size: 1.1em;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .header p {
+        font-size: 1em;
+    }
+}
+</style>
+
+<script>
+// Optional: Zusätzliche Header-Funktionalitäten
+document.addEventListener('DOMContentLoaded', () => {
+    // Beispiel: Smooth Scroll beim Klicken auf Header-Links
+    const headerLinks = document.querySelectorAll('.header a');
+    headerLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+});
+</script>
