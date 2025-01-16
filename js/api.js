@@ -6,12 +6,19 @@ export async function submitForm(data) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
-            mode: 'no-cors'
+            body: JSON.stringify(data)
         });
+        
+        // Überprüfen Sie den Status der Antwort
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Wenn wir hier ankommen, war die Übermittlung erfolgreich
         return true;
     } catch (error) {
-        console.error('Error:', error);
-        return false;
+        console.error('Fehler bei der Übermittlung:', error);
+        // Werfen Sie den Fehler, damit er in main.js behandelt werden kann
+        throw error;
     }
 }
