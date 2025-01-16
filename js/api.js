@@ -1,3 +1,6 @@
+// api.js
+
+// Ersetzen Sie diese URL mit der URL Ihrer Web App
 const API_URL = 'https://script.google.com/macros/s/AKfycbzZevui0HKp3GHJws7gc_VSvepwKbdQ48fpVYfofYA5b2QUT6bXxn7_UyGrNQwcTRG6/exec';
 
 export async function submitForm(data) {
@@ -10,9 +13,10 @@ export async function submitForm(data) {
             body: JSON.stringify(data),
             mode: 'no-cors'
         });
-        return true;
+        
+        return true; // Bei erfolgreicher Übermittlung
     } catch (error) {
         console.error('Error:', error);
-        return false;
+        return false; // Bei einem Fehler
     }
 }
