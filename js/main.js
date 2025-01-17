@@ -9,20 +9,26 @@ document.addEventListener('DOMContentLoaded', () => {
     phoneInput = window.intlTelInput(phoneInputElement, {
         initialCountry: "de",
         preferredCountries: ["de", "at", "ch"],
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         separateDialCode: true,
         formatOnDisplay: true,
         nationalMode: false,
         autoHideDialCode: false,
         allowDropdown: true,
-     customPlaceholder: function(selectedCountryData) {
-            return "+49 151 12345678";
-        }
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
     });
+
+    // Länderauswahl auf Deutschland setzen
+    phoneInput.setCountry("de");
 
     // Telefonnummer-Validierung
     phoneInputElement.addEventListener('blur', function() {
         validatePhoneNumber(this);
+    });
+
+    // Länderauswahl Event
+    phoneInputElement.addEventListener("countrychange", function() {
+        const selectedCountryData = phoneInput.getSelectedCountryData();
+        console.log("Land gewechselt zu: ", selectedCountryData.name);
     });
 
     function validatePhoneNumber(element) {
