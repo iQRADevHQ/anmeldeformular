@@ -184,8 +184,7 @@
         }
 
         /* Telefon Input Styles */
-  
-     /* Telefon Input Styles */
+  /* Telefon Input Styles */
         .iti {
             width: 100% !important;
             position: relative;
@@ -198,17 +197,22 @@
             border-radius: var(--border-radius) 0 0 var(--border-radius);
             border-right: 1px solid #e1e8ed;
             height: 100%;
+            width: 100px;  /* Feste Breite für den Container */
         }
         
         .iti__selected-flag {
             z-index: 10;
-            padding-right: 20px !important;
+            padding-right: 28px !important;
             height: 100%;
         }
 
         .iti--separate-dial-code .iti__selected-flag {
             border-radius: var(--border-radius) 0 0 var(--border-radius);
             background-color: transparent;
+        }
+
+        .iti--separate-dial-code .iti__selected-dial-code {
+            padding-left: 15px;
         }
         
         .iti__country-list {
