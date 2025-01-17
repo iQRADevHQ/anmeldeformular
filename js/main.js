@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         nationalMode: false,
         autoHideDialCode: false,
         allowDropdown: true,
-        customPlaceholder: function(selectedCountryData) {
-            return "Telefonnummer";
+     customPlaceholder: function(selectedCountryData) {
+            return "+49 151 12345678";
         }
     });
 
