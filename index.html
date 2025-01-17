@@ -37,29 +37,20 @@
             padding: 20px;
         }
 
-        .header {
-            position: relative;
-            text-align: center;
-            padding: 30px 0;
+        .form-header {
             background: linear-gradient(135deg, var(--primary-color), #0077b6);
             color: white;
-            margin-bottom: 40px;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
             box-shadow: var(--box-shadow);
         }
 
-        .header h1 {
-            margin-bottom: 15px;
-            font-size: 2.8em;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            font-size: 1.3em;
-            opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto;
+        .form-header h2 {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 600;
         }
 
         .form-container {
@@ -183,7 +174,7 @@
             border: 1px solid #fca5a5;
         }
 
-   /* Telefon Input Styles */
+        /* Telefon Input Styles */
         .iti {
             width: 100% !important;
             position: relative;
@@ -344,14 +335,6 @@
                 padding: 15px;
             }
 
-            .header {
-                padding: 40px 20px;
-            }
-
-            .header h1 {
-                font-size: 2.2em;
-            }
-
             .form-container {
                 padding: 25px;
             }
@@ -359,11 +342,6 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>IQRA Akademie</h1>
-        <p>Anmeldung für Quran- und Arabisch-Unterricht</p>
-    </div>
-
     <div class="container">
         <div id="successMessage" class="success-message">
             Ihre Anmeldung wurde erfolgreich übermittelt! Sie erhalten in Kürze eine Bestätigungs-E-Mail.
@@ -374,6 +352,10 @@
         </div>
 
         <div class="form-container">
+            <div class="form-header">
+                <h2>Anmeldung für Quran- und Arabisch-Unterricht</h2>
+            </div>
+
             <form id="registrationForm">
                 <div class="form-group">
                     <label for="vorname">Vorname*</label>
