@@ -184,9 +184,23 @@
         }
 
         /* Telefon Input Styles */
-       /* Telefon Input Styles */
+       
+/* Telefon Input Styles */
         .iti {
             width: 100% !important;
+            position: relative;
+        }
+
+        .iti__flag-container {
+            z-index: 10;
+        }
+        
+        .iti__selected-flag {
+            z-index: 10;
+        }
+        
+        .iti__country-list {
+            z-index: 11;
         }
         
         .iti__flag {
@@ -199,12 +213,11 @@
             }
         }
 
-        .iti--allow-dropdown input {
-            padding-left: 52px;
-        }
-
-        .iti--separate-dial-code input {
-            padding-left: 89px;
+        .iti--allow-dropdown input,
+        .iti input {
+            padding-left: 90px !important;
+            position: relative;
+            z-index: 0;
         }
 
         .phone-error {
@@ -292,6 +305,7 @@
             display: block;
             position: relative;
         }
+
         @keyframes slideIn {
             from {
                 transform: translateY(-20px);
