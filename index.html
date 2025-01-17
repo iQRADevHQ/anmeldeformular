@@ -186,41 +186,31 @@
         /* Telefon Input Styles */
        /* Telefon Input Styles */
         .iti {
-            width: 100%;
-            display: block;
-            position: relative;
+            width: 100% !important;
         }
         
-        .iti__flag-container {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            padding: 1px;
-            display: flex;
-            align-items: center;
-        }
-
-        .iti__selected-flag {
-            z-index: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            padding: 0 6px 0 8px;
-            background-color: #f5f5f5;
-        }
-
         .iti__flag {
-            width: 20px;
-            height: 15px;
-            box-shadow: 0px 0px 1px 0px #888;
             background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png");
-            background-repeat: no-repeat;
         }
-        
-        .iti__selected-dial-code {
-            padding-left: 8px;
-            color: #333;
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .iti__flag {
+                background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags@2x.png");
+            }
+        }
+
+        .iti--allow-dropdown input {
+            padding-left: 52px;
+        }
+
+        .iti--separate-dial-code input {
+            padding-left: 89px;
+        }
+
+        .phone-error {
+            margin-top: 5px;
+            color: red;
+            font-size: 14px;
         }
 
         .iti__tel-input,
