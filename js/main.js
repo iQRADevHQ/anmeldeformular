@@ -9,12 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     phoneInput = window.intlTelInput(phoneInputElement, {
         initialCountry: "de",
         preferredCountries: ["de", "at", "ch"],
-        separateDialCode: true,
-        formatOnDisplay: true,
-        nationalMode: false,
-        autoHideDialCode: false,
-        allowDropdown: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        separateDialCode: true
     });
 
     // Länderauswahl auf Deutschland setzen
