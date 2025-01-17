@@ -1,7 +1,7 @@
 // api.js
 export async function submitForm(data) {
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzdNgPqzRr3V7aAuwDPULEQ8VY9YkQeRxyvl2JpVNjpRf9cdmacISfhiFAozn37UqdN/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzX5B0hhDEM0ccQRd4uWSlBL_lp1L1z7xcFSQfxx0wJs-1UhBU-tj6B4F1A6t6mI282/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
