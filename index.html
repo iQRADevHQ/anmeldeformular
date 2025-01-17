@@ -185,6 +185,7 @@
 
         /* Telefon Input Styles */
   
+      /* Telefon Input Styles */
         .iti {
             width: 100% !important;
             position: relative;
@@ -197,6 +198,8 @@
         
         .iti__selected-flag {
             z-index: 10;
+            background-color: #f5f5f5 !important;
+            border-right: 1px solid #e1e8ed;
         }
         
         .iti__country-list {
@@ -222,6 +225,7 @@
 
         .iti__selected-flag {
             padding-right: 20px !important;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
         }
 
         .phone-error {
@@ -245,11 +249,6 @@
             background-color: #fff;
             margin-bottom: 0;
         }
-
-.iti input[type="tel"]::placeholder {
-    text-align: right;
-    padding-left: 5px; /* Falls nötig */
-}
 
         .iti input::placeholder {
             content: "+49 151 12345678";
@@ -318,6 +317,7 @@
             display: block;
             position: relative;
         }
+        
         @keyframes slideIn {
             from {
                 transform: translateY(-20px);
