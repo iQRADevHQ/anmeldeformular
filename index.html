@@ -182,46 +182,63 @@
             color: #991b1b;
             border: 1px solid #fca5a5;
         }
- .iti {
+.iti {
             width: 100%;
+            margin-bottom: 1rem;
         }
-
-        .iti__flag {
-            background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png");
+        
+        .iti__tel-input {
+            width: 100%;
+            height: 60px;
+            padding: 0.875rem 1rem 0.875rem 90px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: white;
         }
-
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .iti__flag {
-                background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags@2x.png");
-            }
+        
+        .iti__tel-input:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
         }
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        
+        .iti__tel-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 158, 227, 0.1);
+            background-color: white;
         }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .header {
-                padding: 40px 20px;
-            }
-
-            .header h1 {
-                font-size: 2.2em;
-            }
-
-            .form-container {
-                padding: 25px;
-            }
+        
+        .iti__flag-container {
+            padding: 0 12px;
+            border-right: 1px solid #e1e8ed;
+        }
+        
+        .iti__selected-flag {
+            padding: 0 12px;
+            border-radius: 10px 0 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .iti__selected-flag:hover {
+            background-color: var(--primary-light) !important;
+        }
+        
+        .iti__country-list {
+            border-radius: 12px;
+            border: 2px solid #e1e8ed;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            margin-top: 12px;
+        }
+        
+        .iti__country {
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .iti__country:hover {
+            background-color: var(--primary-light);
         }
     </style>
 </head>
