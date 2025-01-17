@@ -28,16 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function validatePhoneNumber(element) {
-        // Container für die Fehlermeldung erstellen
-        let errorMsg = element.parentNode.querySelector('.phone-error');
+        // Alle vorhandenen Fehlermeldungen entfernen
+        const existingErrors = element.parentNode.parentNode.querySelectorAll('.phone-error');
+        existingErrors.forEach(error => error.remove());
         
-        // Wenn noch kein Fehler-Container existiert, einen neuen erstellen
-        if (!errorMsg) {
-            errorMsg = document.createElement('div');
-            errorMsg.className = 'phone-error';
-            // Fehler-Container nach dem iti-Container einfügen
-            element.parentNode.parentNode.insertBefore(errorMsg, element.parentNode.nextSibling);
-        }
+        // Einen neuen Error-Container erstellen
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'phone-error';
 
         if (!phoneInput.isValidNumber()) {
             const errorCode = phoneInput.getValidationError();
@@ -58,12 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             errorMsg.textContent = errorMessage;
-            errorMsg.style.display = 'block';
+            // Fehlermeldung nach dem iti-Container einfügen
+            element.parentNode.parentNode.insertBefore(errorMsg, element.parentNode.nextSibling);
             return false;
-        } else {
-            errorMsg.style.display = 'none';
-            return true;
         }
+        return true;
     }
 
     // PLZ Validierung
