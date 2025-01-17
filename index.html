@@ -186,6 +186,7 @@
         /* Telefon Input Styles */
         .iti {
             width: 100%;
+            display: block;
         }
 
         .iti__tel-input,
@@ -197,6 +198,11 @@
             font-size: 16px;
             transition: var(--transition);
             background-color: #fff;
+            margin-bottom: 0;
+        }
+
+        .iti input::placeholder {
+            content: "+49 151 12345678";
         }
 
         .iti input:hover {
@@ -213,11 +219,17 @@
 
         .iti__flag-container {
             margin-left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: auto;
         }
 
         .iti__selected-flag {
             padding: 0 8px 0 10px;
             border-radius: var(--border-radius) 0 0 var(--border-radius);
+            height: calc(100% - 4px);
+            top: 2px;
+            left: 2px;
         }
 
         .iti__country-list {
@@ -247,6 +259,14 @@
             border-right: 4px solid transparent;
             border-top: 4px solid var(--text-color);
             margin-left: 6px;
+        }
+
+        .phone-error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+            position: relative;
         }
 
         @keyframes slideIn {
