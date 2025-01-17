@@ -28,13 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function validatePhoneNumber(element) {
-        const errorMsg = document.createElement('div');
-        errorMsg.className = 'phone-error';
-        errorMsg.style.cssText = 'color: red; font-size: 14px; margin-top: 5px;';
-
-        const existingError = element.parentNode.querySelector('.phone-error');
-        if (existingError) {
-            existingError.remove();
+        // Container für die Fehlermeldung erstellen
+        let errorMsg = element.parentNode.querySelector('.phone-error');
+        
+        // Wenn noch kein Fehler-Container existiert, einen neuen erstellen
+        if (!errorMsg) {
+            errorMsg = document.createElement('div');
+            errorMsg.className = 'phone-error';
+            // Fehler-Container nach dem iti-Container einfügen
+            element.parentNode.parentNode.insertBefore(errorMsg, element.parentNode.nextSibling);
         }
 
         if (!phoneInput.isValidNumber()) {
@@ -56,10 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             errorMsg.textContent = errorMessage;
-            element.parentNode.appendChild(errorMsg);
+            errorMsg.style.display = 'block';
             return false;
+        } else {
+            errorMsg.style.display = 'none';
+            return true;
         }
-        return true;
     }
 
     // PLZ Validierung
