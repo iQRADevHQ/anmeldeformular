@@ -131,9 +131,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Formular absenden
             await submitForm(data);
             
-            // Lade-Modal schließen und Erfolgs-Modal anzeigen
+            // Lade-Modal schließen
             loadingModal.style.display = 'none';
+            
+            // Erfolgs-Modal anzeigen
             showSuccess();
+            
+            // Formular zurücksetzen
             event.target.reset();
             
             // Telefon-Input zurücksetzen
@@ -142,8 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Fehler bei der Übermittlung:', error);
             
-            // Lade-Modal schließen und Fehler-Nachricht anzeigen
+            // Lade-Modal schließen
             loadingModal.style.display = 'none';
+            
+            // Fehler-Modal anzeigen
             showError(error.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
         } finally {
             submitButton.disabled = false;
