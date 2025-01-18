@@ -43,11 +43,13 @@ export function showLoading() {
 
 export function showSuccess() {
     const modal = document.getElementById('successModal');
+    
+    // Stelle sicher, dass das Modal sichtbar ist
+    modal.style.display = 'block';
+    
     const modalHeader = modal.querySelector('.modal-header h3');
     const modalBody = modal.querySelector('.modal-body');
     const modalFooter = modal.querySelector('.modal-footer');
-    const closeButton = modal.querySelector('.close-button');
-    const modalBtn = modal.querySelector('.modal-btn');
     
     // Modal-Inhalt zurücksetzen
     modalHeader.textContent = 'Erfolgreich gesendet!';
@@ -55,26 +57,39 @@ export function showSuccess() {
     modalFooter.style.display = 'block';
     
     // Close-Button Event Listener
+    const closeButton = modal.querySelector('.close-button');
+    const modalBtn = modal.querySelector('.modal-btn');
+    
+    // Vorherige Event Listener entfernen
     const closeModal = () => {
         modal.style.display = 'none';
     };
     
-    closeButton.addEventListener('click', closeModal);
-    modalBtn.addEventListener('click', closeModal);
+    // Alte Event Listener entfernen
+    closeButton.onclick = closeModal;
+    modalBtn.onclick = closeModal;
     
     // Schließen bei Klick außerhalb des Modals
-    window.addEventListener('click', (event) => {
+    const outsideClickHandler = (event) => {
         if (event.target === modal) {
             closeModal();
         }
-    });
+    };
     
-    // Modal mit Escape-Taste schließen
-    window.addEventListener('keydown', (event) => {
+    // Alte Event Listener entfernen
+    window.removeEventListener('click', outsideClickHandler);
+    window.addEventListener('click', outsideClickHandler);
+    
+    // Escape-Taste Listener
+    const escapeHandler = (event) => {
         if (event.key === 'Escape') {
             closeModal();
         }
-    });
+    };
+    
+    // Alte Event Listener entfernen
+    window.removeEventListener('keydown', escapeHandler);
+    window.addEventListener('keydown', escapeHandler);
 }
 
 export function showError(message) {
