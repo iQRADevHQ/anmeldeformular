@@ -1,4 +1,4 @@
-import { showSuccess, showError } from './validation.js';
+import { showSuccess, showError, showLoading } from './validation.js';
 import { submitForm } from './api.js';
 
 let phoneInput;
@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
         submitButton.disabled = true;
         submitButton.textContent = 'Wird gesendet...';
         
+        // Lade-Modal anzeigen
+        const loadingModal = showLoading();
+        
         try {
             // E-Mail-Format Validierung
             const emailInput = document.getElementById('email');
@@ -127,6 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Formular absenden
             await submitForm(data);
+            
+            // Lade-Modal schließen und Erfolgs-Modal anzeigen
+            loadingModal.style.display = 'none';
             showSuccess();
             event.target.reset();
             
@@ -135,6 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             console.error('Fehler bei der Übermittlung:', error);
+            
+            // Lade-Modal schließen und Fehler-Nachricht anzeigen
+            loadingModal.style.display = 'none';
             showError(error.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.");
         } finally {
             submitButton.disabled = false;
