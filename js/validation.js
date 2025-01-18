@@ -1,4 +1,3 @@
-// validation.js
 export function showLoading() {
     const modal = document.getElementById('successModal');
     const modalHeader = modal.querySelector('.modal-header h3');
@@ -60,36 +59,27 @@ export function showSuccess() {
     const closeButton = modal.querySelector('.close-button');
     const modalBtn = modal.querySelector('.modal-btn');
     
-    // Vorherige Event Listener entfernen
-    const closeModal = () => {
+    // Event Listener für Schließen des Modals
+    closeButton.onclick = () => {
+        modal.style.display = 'none';
+    };
+    modalBtn.onclick = () => {
         modal.style.display = 'none';
     };
     
-    // Alte Event Listener entfernen
-    closeButton.onclick = closeModal;
-    modalBtn.onclick = closeModal;
-    
     // Schließen bei Klick außerhalb des Modals
-    const outsideClickHandler = (event) => {
+    window.addEventListener('click', (event) => {
         if (event.target === modal) {
-            closeModal();
+            modal.style.display = 'none';
         }
-    };
-    
-    // Alte Event Listener entfernen
-    window.removeEventListener('click', outsideClickHandler);
-    window.addEventListener('click', outsideClickHandler);
+    });
     
     // Escape-Taste Listener
-    const escapeHandler = (event) => {
+    window.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            closeModal();
+            modal.style.display = 'none';
         }
-    };
-    
-    // Alte Event Listener entfernen
-    window.removeEventListener('keydown', escapeHandler);
-    window.addEventListener('keydown', escapeHandler);
+    });
 }
 
 export function showError(message) {
